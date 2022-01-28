@@ -1,3 +1,39 @@
+class StackUsingList():
+	def __init__(self):
+		self._list = []
+		self._iter_index = 0
+
+	def size(self):
+		return len(self._list)
+
+	def is_empty(self):
+		return self.size() == 0
+
+	def push(self, elem):
+		self._list = [elem] + self._list
+	
+	def pop(self):
+		if self.is_empty(): raise IndexError()
+		return self._list.pop(0)
+
+	def peek(self):
+		if self.is_empty(): raise IndexError()
+		return self._list[0]
+	
+	def __repr__(self):
+		return f"StackUsingList: {str(self._list)}"
+
+	def __iter__(self):
+		return self
+	
+	def __next__(self):
+		if self.is_empty() or self.size() == self._iter_index:
+			raise StopIteration()
+		x = self._list[self._iter_index]
+		self._iter_index += 1
+		return x
+
+
 def brackets_problem_failed_attempt():
 	"""
 	https://www.youtube.com/watch?v=L3ud3rXpIxA&list=PLDV1Zeh2NRsB6SWUrDFW2RmDotAfPbeHu&index=8
@@ -88,8 +124,18 @@ def main():
 	[[]][]
 	[{[]}]
 	[[]]{}({})"""
-	for s in l.splitlines():
-		brackets_problem_using_stack(s.strip())
+	# for s in l.splitlines():
+	# 	brackets_problem_using_stack(s.strip())
 	# brackets_problem_using_stack()
+	s = StackUsingList()
+	s.push(10)
+	s.push(20)
+	s.push(30)
+	s.push(40)
+	s.pop()
+	print(s)
+	assert s.peek() == 30
+	for i in s:
+		print(i)
 
 main()

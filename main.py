@@ -7,4 +7,7 @@
 # from learning_algorithms.abdul_bari import backtracking
 # from learning_algorithms.datastructures import dynamic_array
 # from learning_algorithms.datastructures import linked_list
-from learning_algorithms.datastructures import stack
+# from learning_algorithms.datastructures import stack
+# from learning_algorithms.datastructures import queue
+from learning_algorithms.datastructures import binary_heap
+

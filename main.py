@@ -9,5 +9,6 @@
 # from learning_algorithms.datastructures import linked_list
 # from learning_algorithms.datastructures import stack
 # from learning_algorithms.datastructures import queue
-from learning_algorithms.datastructures import binary_heap
+# from learning_algorithms.datastructures import binary_heap
+from learning_algorithms.datastructures import union_find
 

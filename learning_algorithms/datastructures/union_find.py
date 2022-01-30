@@ -12,6 +12,7 @@ class UnionFind():
 		# joins two sets 1,2
 		u.unify(1,2)
 		"""
+		print(f"Building UnionFind: {n}")
 		# no. of elems
 		self.n = n
 		# an array with index as node and value as the root node
@@ -33,6 +34,7 @@ class UnionFind():
 		# 2nd iteration: root=2; 2 != 0; root = 0;
 		# 3rd iteration: stop 0 == 0
 		root = p
+		print(f"finding p: {p}")
 		while root != self._id[root]:
 			print("modify root", p, root, self._id[root])
 			root = self._id[root]
@@ -109,30 +111,131 @@ class UnionFind():
 		self._id[smallroot] = bigroot
 		self._size[bigroot] += self._size[smallroot]
 		self._size[smallroot] = 0
+		return True
 
 
-def detect_cycle():
+def detect_cycle_using_union_find():
 	"""
 	"1.12 Disjoint sets data structures - weighted union and collpapsing find"
 	https://www.notion.so/1-Analysis-of-Algorithm-b4dfd7e7ee354435a4871355c82c01b9
 	"""
-	pass
+	# given
+	G = [
+		(1,2),
+		(1,4),
+		(2,3),
+		(3,4),
+		(2,5),
+		(5,8),
+		(5,6),
+		(7,6),
+		(7,8),
+	]
+	# create universal set 1st of size of no. of vertices
+	US = list(range(1,9))
+	n = len(US)
+	# make 0-indexed
+	uf = UnionFind(n)
+	cycles = []
+	for e in G:
+		u,v = e
+		u,v = u-1, v-1
+		# print("u,v", u,v)
+		successful_union = uf.union(u,v)
+		print("u,v,successful_union", u,v,successful_union)
+		if not successful_union:
+			cycles.append(e)
+	print(f"cycles: {cycles}")
+
+
+def detect_cycle_abdul():
+	"""
+	"1.12 Disjoint sets data structures - weighted union and collpapsing find"
+	https://www.notion.so/1-Analysis-of-Algorithm-b4dfd7e7ee354435a4871355c82c01b9
+	"""
+	# given
+	G = [
+		(1,2),
+		(1,4),
+		(2,3),
+		(3,4),
+		(2,5),
+		(5,8),
+		(5,6),
+		(7,6),
+		(7,8),
+	]
+	n = 8
+	# create universal set 1st of size of no. of vertices (1-indexed)
+	US = list(range(n+1))
+	print(US)
+	n = len(US)
+	# set -1 to all values by default
+	US = [-1 for i in US]
+
+	def _find_root(e):
+		# find root of given node e recursively by looking up US
+		# NOTE: applies same principles as UnionFind
+		if US[e] < 0: return e	# root index will always contain negative
+		return _find_root(US[e])
+	
+	def _union(u,v):
+		# join u and v such that make one node point to other as parent
+		# NOTE: applies same principles as UnionFind
+		ur = _find_root(u)
+		vr = _find_root(v)
+		root = ur
+		child = vr
+		if US[child] < 0:
+			t = root
+			root = child
+			child = t
+		print(f"u,v {u},{v}; ur,vr {ur},{vr}; root,child {root},{child}")
+		US[root] += (-1)	# increase size
+		US[child] = root
+	
+	cycles = []
+	for e in G:
+		u,v = e
+		print(f"u,v: {u},{v}: before: {US}")
+		if _find_root(u) == _find_root(v):
+			cycles.append(e)
+		else:
+			_union(u,v)
+		print(f"u,v: {u},{v}: after: {US}")
+		
+	print(f"cycles: {cycles}")
+
+	# # use 1-indexed
+	# uf = UnionFind(n)
+	# cycles = []
+	# for e in G:
+	# 	u,v = e
+	# 	u,v = u-1, v-1
+	# 	# print("u,v", u,v)
+	# 	successful_union = uf.union(u,v)
+	# 	print("u,v,successful_union", u,v,successful_union)
+	# 	if not successful_union:
+	# 		cycles.append(e)
+	# print(f"cycles: {cycles}")
 
 
 def main():
 	print("Running union find")
 	n = 4
 	s = UnionFind(n)
-	# print(s._id)
-	# s._id = [0,0,0,2]
-	# print(s.find(3))
-	# print(s.find_recursion(3))
+	print(s._id)
+	s._id = [0,0,0,2]
+	print(s.find(3))
+	print(s.find_recursion(3))
 	s.union(0,1)
 	print(s._id)
 	s.union(2,3)
 	print(s._id)
 	s.union(1,2)
 	print(s._id)
-	pass
+
+	detect_cycle_using_union_find()
+	detect_cycle_abdul()
 
 main()

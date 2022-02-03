@@ -1,3 +1,4 @@
+import math
 
 def is_list_sorted_recursive(l, i=0):
 	"""
@@ -163,5 +164,6 @@ def test_binary_search():
 def main():
 	test_is_list_sorted()
 	test_binary_search()
+	print("is sort and binary search complete")
 
 main()

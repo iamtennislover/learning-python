@@ -15,7 +15,8 @@
 # from learning_algorithms.datastructures import hashtable
 # import learning_algorithms.recursion
 # from learning_algorithms.prepwork.divideandconquer import is_sorted_and_binary_search
-from learning_algorithms.prepwork.divideandconquer import heap_sort
+# from learning_algorithms.prepwork.divideandconquer import heap_sort
+from learning_algorithms.prepwork.divideandconquer import merge_sort
 
 
 

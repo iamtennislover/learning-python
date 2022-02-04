@@ -2,7 +2,7 @@
 https://www.notion.so/ammul/2-7-1-3-Merge-Sort-90c875dc3fc548eeb42c0f600a273343
 """
 
-def merge_sort_example1(A, B, m, n):
+def merge_two_sorted_lists(A, B, m, n):
   """Example in python with 0 indexed
   to sort two lists and return sorted result
   A = lista
@@ -10,7 +10,7 @@ def merge_sort_example1(A, B, m, n):
   m = size of A
   n = size B
   """
-  # print("running merge_sort_example1.input", A, B, m, n)
+  # print("running merge_two_sorted_lists.input", A, B, m, n)
   i=0;j=0;k=0
   C = [None] * (m+n)
   # print(m, n, len(C))
@@ -34,7 +34,7 @@ def merge_sort_example1(A, B, m, n):
     C[k] = e
     k = k + 1
   
-  # print("running merge_sort_example1.output", C)
+  # print("running merge_two_sorted_lists.output", C)
   return C
 
 
@@ -45,7 +45,7 @@ def _merge(l,m,h,A,B):
   pass
 
 def merge_sort_recursive1(A,l,h):
-  """merge sort a given list recursively using merge_sort_example1
+  """merge sort a given list recursively using merge_two_sorted_lists
 
   A: list to sort
   l: first index: 0
@@ -65,7 +65,7 @@ def merge_sort_recursive1(A,l,h):
     print(f"a: {a}; b: {b}")
     sizea = len(a)
     sizeb = len(b)
-    c = merge_sort_example1(a, b, sizea, sizeb)
+    c = merge_two_sorted_lists(a, b, sizea, sizeb)
     print(f"c: {c}")
     A[l:h+1] = c
 
@@ -74,8 +74,8 @@ def main():
   print("running merge sort main")
   # A = [2,8,15,18]
   # B = [5,9,12,17,19,25,30]
-  # print("merge_sort_example1",
-  #   merge_sort_example1(A, B, len(A), len(B)))
+  # print("merge_two_sorted_lists",
+  #   merge_two_sorted_lists(A, B, len(A), len(B)))
   
   A = [9,3,7,5,6,4,8,2]
   print("merge_sort_recursive before", A)

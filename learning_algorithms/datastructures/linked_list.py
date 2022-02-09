@@ -43,9 +43,10 @@ class DoublyLinkedList():
 		if self.is_empty():		# since empty, given elem becomes head and tail
 			self._head = self._tail = _Node(elem, None, None)
 		else:	# since head already exists, given elem becomes new head
-			# create new head with next=current head
-			# NOTE: we have to update self._head since it also updates the tail
-			# we can't just do new_head = _Node(...)
+			# create new head with next=current head and
+			# current head's previous=new head
+			# NOTE: we have to update self._head since it also updates the
+			# references (e.g. tail). we can't just do new_head = _Node(...)
 			self._head.prev = _Node(elem, None, self._head)
 			# assign new elem to head
 			self._head = self._head.prev

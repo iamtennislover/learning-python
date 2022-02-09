@@ -107,8 +107,8 @@ def _merges_per_level(l, n, p):
 		# right index: we want li - ri distance to always be power of 2, hence need 2*p - 1
 		# NOTE: In single L1 (0th level) ri = i+1 (or i + 2^0 - 1) is enough
 		ri = i + 2*p - 1
-		if li >= n:	# we have reached end of array, so skip
-			continue
+		if li >= n:	# we have reached end of array, so skip (NOTE: comparing smaller index, not larger, if we compare larger one, we will skip iterations)
+			break
 		
 		mi = (li+ri)//2
 		left_half = l[li:mi+1]

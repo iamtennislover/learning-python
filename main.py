@@ -16,7 +16,11 @@
 # import learning_algorithms.recursion
 # from learning_algorithms.prepwork.divideandconquer import is_sorted_and_binary_search
 # from learning_algorithms.prepwork.divideandconquer import heap_sort
-from learning_algorithms.prepwork.divideandconquer import merge_sort
+# from learning_algorithms.prepwork.divideandconquer import merge_sort
+# from learning_algorithms.prepwork.divideandconquer import quicksort
+# from learning_algorithms.prepwork.greedy import knapsack
+from learning_algorithms.prepwork.greedy import jobsequencing
+
 
 
 

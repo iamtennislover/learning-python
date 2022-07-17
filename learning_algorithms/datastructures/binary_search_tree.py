@@ -1,3 +1,7 @@
+"""
+https://www.notion.so/ammul/Binary-Tree-and-Binary-Search-Tree-DS-6a41bfb93bd349c7a61db606d779a366#f2b84abc0a534cd5b862dce73c526133
+	clone of https://github.com/williamfiset/Algorithms/blob/master/src/main/java/com/williamfiset/algorithms/datastructures/binarysearchtree/BinarySearchTree.java
+"""
 import string
 
 
@@ -14,9 +18,6 @@ class _Node:
 
 class BinarySearchTree:
 	"""
-	https://www.notion.so/ammul/Binary-Tree-and-Binary-Search-Tree-DS-6a41bfb93bd349c7a61db606d779a366#f2b84abc0a534cd5b862dce73c526133
-	clone of https://github.com/williamfiset/Algorithms/blob/master/src/main/java/com/williamfiset/algorithms/datastructures/binarysearchtree/BinarySearchTree.java
-
 	Basic idea is that it builds a BST tree with
 	all smaller nodes on left side and larger nodes on right side
 	and leaf nodes as null/None

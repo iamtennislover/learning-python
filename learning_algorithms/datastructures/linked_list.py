@@ -98,21 +98,6 @@ class DoublyLinkedList():
 			self._tail.next = None
 		return data
 
-	def _remove(self, node: _Node):
-		"""remove a given node - O(1)"""
-		if node.prev == None: return self.remove_first()
-		if node.next == None: return self.remove_last()
-		data = node.data
-		# skip given node from its prev and next
-		# e.g. removing 3 in [1,2,3,4,5]
-		next_node = node.next
-		prev_node = node.prev
-		next_node.prev = prev_node # 4 -> 2
-		prev_node.next = next_node # 2 -> 4
-		self._size -= 1
-		node.prev = node.next = node.data = None; node = None # clear data
-		return data
-
 	def remove_at(self, index):
 		"""Remove an elem at given index - O(n)"""
 		if index >= self._size or index < 0: raise ValueError()
@@ -129,6 +114,7 @@ class DoublyLinkedList():
 			for i in range(self._size):
 				if index == i: break
 				node = node.next
+		# once node is found matching index, remove it
 		return self._remove(node)
 
 	def remove(self, elem):
@@ -141,6 +127,24 @@ class DoublyLinkedList():
 			node = node.next
 
 		return False
+
+	def _remove(self, node: _Node):
+		"""remove a given node - O(1)"""
+		# if node is head, remove it
+		if node.prev == None: return self.remove_first()
+		# if node is tail, remove it
+		if node.next == None: return self.remove_last()
+		# if node is in middle
+		data = node.data
+		# skip given node from its prev and next
+		# e.g. removing 3 in [1,2,3,4,5]
+		next_node = node.next
+		prev_node = node.prev
+		next_node.prev = prev_node # 4 -> 2
+		prev_node.next = next_node # 2 -> 4
+		self._size -= 1
+		node.prev = node.next = node.data = None; node = None # clear entire node
+		return data
 
 	def index_of(self, elem):
 		"""get index of elem"""

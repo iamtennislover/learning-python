@@ -6,28 +6,28 @@ class DynamicArray():
 		self._arr = [None]*capacity # internal fixed array
 		self._iter_index = 0
 	
-	def size(self) -> int:
+	def size(self) -> int: # O(1)
 		return self.len
 	
-	def is_empty(self) -> bool:
+	def is_empty(self) -> bool: # O(1)
 		return self.size() == 0
 	
-	def get(self, index: int):
+	def get(self, index: int): # access - O(1)
 		if index >= self.len or index < 0: # input validation
 			raise IndexError()
 
 		return self._arr[index]
 	
-	def set(self, index: int, elem):
+	def set(self, index: int, elem): # insert - O(1)
 		if index >= self.len or index < 0: raise IndexError()
 		self._arr[index] = elem
 
-	def clear(self):
+	def clear(self): # O(n)
 		for i in range(self._capacity):
 			self._arr[i] = None
 		self.len = 0
 
-	def add(self, elem):
+	def add(self, elem): # append - O(1)
 		"""Append elem to array
 		NOTE: since originally self.len == 0,
 		elems are added from 1st index onwards
@@ -54,7 +54,7 @@ class DynamicArray():
 		self._arr[self.len] = elem
 		self.len = self.len + 1	# NOTE: only after assigning variable above, increase length size
 
-	def remove_at(self, index):
+	def remove_at(self, index): # O(n)
 		"""Remove an elem at given index
 
 		Logic:
@@ -76,7 +76,7 @@ class DynamicArray():
 		self._capacity = self._capacity - 1
 		return d
 
-	def index_of(self, elem):
+	def index_of(self, elem): # search - O(n)
 		"""get index of elem"""
 		for i in range(self._capacity):
 			if elem == self._arr[i]:

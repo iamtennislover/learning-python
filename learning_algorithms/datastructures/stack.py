@@ -34,41 +34,6 @@ class StackUsingList():
 		return x
 
 
-def brackets_problem_failed_attempt():
-	"""
-	https://www.youtube.com/watch?v=L3ud3rXpIxA&list=PLDV1Zeh2NRsB6SWUrDFW2RmDotAfPbeHu&index=8
-
-	Logic:
-	1. string must have even chars
-	2. compare even char adjacent pairs - i.e. 1,2; 3,4; etc.
-	3. compare 1st-last pairs - i.e. 1,6; 2,5; etc.
-	[1,2,3,4,5,6]
-	"""
-	s = list("[[]]{}({})")	# this fails
-	# s = list("[]{}")
-	# s = list("[{()}]")
-	# s = list("[{((}]")
-	n = len(s)
-	p1 = ["(","[","{"]
-	p2 = [')', ']', '}']
-	np = len(p1)
-	assert n % 2 == 0, "string must be of even length"
-	print("n", n)
-	matched = [None]*n
-	for i in range(n):
-		# print(i, n-i-1)
-		# if i % 2 == 0:
-		# 	print(i, i+1)
-		for j in range(np):
-			if i % 2 == 0 and s[i] == p1[j] and s[i+1] == p2[j]:
-				matched[i] = s[i]
-				matched[i+1] = s[i+1]
-			elif s[i] == p1[j] and s[n-i-1] == p2[j]:
-				matched[i] = s[i]
-				matched[n-i-1] = s[n-i-1]
-	
-	print(matched == s)
-
 def brackets_problem_using_stack(s: str):
 	"""
 	https://www.youtube.com/watch?v=L3ud3rXpIxA&list=PLDV1Zeh2NRsB6SWUrDFW2RmDotAfPbeHu&index=8
@@ -115,6 +80,42 @@ def brackets_problem_using_stack(s: str):
 			statement = "INVALID" if not statement else statement
 	
 	print("stack", stack, statement)
+
+
+def brackets_problem_failed_attempt():
+	"""solved by `brackets_problem_using_stack()`
+	https://www.youtube.com/watch?v=L3ud3rXpIxA&list=PLDV1Zeh2NRsB6SWUrDFW2RmDotAfPbeHu&index=8
+
+	Logic:
+	1. string must have even chars
+	2. compare even char adjacent pairs - i.e. 1,2; 3,4; etc.
+	3. compare 1st-last pairs - i.e. 1,6; 2,5; etc.
+	[1,2,3,4,5,6]
+	"""
+	s = list("[[]]{}({})")	# this fails
+	# s = list("[]{}")
+	# s = list("[{()}]")
+	# s = list("[{((}]")
+	n = len(s)
+	p1 = ["(","[","{"]
+	p2 = [')', ']', '}']
+	np = len(p1)
+	assert n % 2 == 0, "string must be of even length"
+	print("n", n)
+	matched = [None]*n
+	for i in range(n):
+		# print(i, n-i-1)
+		# if i % 2 == 0:
+		# 	print(i, i+1)
+		for j in range(np):
+			if i % 2 == 0 and s[i] == p1[j] and s[i+1] == p2[j]:
+				matched[i] = s[i]
+				matched[i+1] = s[i+1]
+			elif s[i] == p1[j] and s[n-i-1] == p2[j]:
+				matched[i] = s[i]
+				matched[n-i-1] = s[n-i-1]
+	
+	print(matched == s)
 
 
 def main():

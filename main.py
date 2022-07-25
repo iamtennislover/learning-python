@@ -12,7 +12,8 @@
 # from learning_algorithms.datastructures import binary_heap
 # from learning_algorithms.datastructures import union_find
 # from learning_algorithms.datastructures import binary_search_tree
-from learning_algorithms.datastructures import perfect_binary_tree
+# from learning_algorithms.datastructures import perfect_binary_tree
+from learning_algorithms.datastructures import heap
 # from learning_algorithms.datastructures import hashtable
 # import learning_algorithms.recursion
 # from learning_algorithms.prepwork.divideandconquer import is_sorted_and_binary_search

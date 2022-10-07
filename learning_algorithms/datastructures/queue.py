@@ -42,8 +42,8 @@ class SimpleQueueUsingFixedArray():
     def __init__(self, capacity):
         self._list = [None] * (capacity)
         # pointers
-        self._front = 0
-        self._back = 0
+        self._front = 0  # beginning of list index
+        self._back = 0  # end of list index
 
     def __repr__(self):
         return f"SimpleQueueUsingFixedArray:{self._list}"

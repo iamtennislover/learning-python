@@ -7,7 +7,7 @@ class _Node:
         self.next = nex
 
     def __repr__(self):
-        return f"Node:{self.data}"
+        return f"{self.prev.data if self.prev else 'None'}->Node:{self.data}->{self.next.data if self.next else 'None'}"
 
 
 class DoublyLinkedList():
@@ -46,8 +46,8 @@ class DoublyLinkedList():
         else:  # since head already exists, given elem becomes new head
             # create new head with next=current head and
             # current head's previous=new head
-            # NOTE: we have to update self._head since it also updates the
-            # references (e.g. tail). we can't just do new_head = _Node(...)
+            # NOTE: current head becomes node after head
+            # NOTE: Keep https://www.notion.so/ammul/Coding-Interview-Tips-ba01443201884d4282d4b664ebb73ef5 in mind
             self._head.prev = _Node(elem, None, self._head)
             # assign new elem to head
             self._head = self._head.prev
@@ -59,7 +59,7 @@ class DoublyLinkedList():
             self._head = self._tail = _Node(elem, None, None)
         else:  # since tail already exists, given elem becomes new tail
             # create new tail with prev=current tail
-            # NOTE: we have to update self._tail since it also updates the head
+            # NOTE: current tail becomes node previous to tail
             self._tail.next = _Node(elem, self._tail, None)
             # assign new elem to tail
             self._tail = self._tail.next
@@ -194,6 +194,50 @@ class DoublyLinkedList():
         x = " -> ".join(s)
         return f"DoublyLinkedList: [{x}]"
 
+    def reverse(self):
+        """Reverse in place
+
+        logic: iterate/recurse starting from head, and only
+        - set previous to next (e.g. in 0->1, 0's previous becomes 1)
+        - set next to previous (e.g. in 0->1, 0's next becomes None)
+        """
+        n = self._head
+        while n:
+            p = n.prev
+            n0 = str(n)
+            n.prev = n.next
+            n.next = p
+            n = n.prev  # go left to right
+            # print("xxx", n0, n)
+        self._head, self._tail = self._tail, self._head
+        """FAILED TO WORK
+        Logic: following same logic as reversing a list by swapping opposite ends n/2 times
+
+        Tracing:
+        start list tmp_head tmp_tail (ending results)
+        - [0,1,2,3,4] 0 4
+        0 [4,1,2,3,0] 1 3
+        1 [4,3,2,1,0] 
+        '''
+        tmp_head = self._head
+        tmp_tail = self._tail
+        for i in range(self._size // 2):
+            print(i, "before", tmp_head, tmp_tail)
+            before_tmp_head_prev = tmp_head.prev
+            before_tmp_head_next = tmp_head.next
+            before_tmp_tail_prev = tmp_tail.prev
+            tmp_head.prev = tmp_head.next
+            tmp_head.next = tmp_tail.next
+            tmp_tail.prev = before_tmp_head_prev
+            tmp_tail.next = before_tmp_tail_prev
+            tmp_head = before_tmp_head_next
+            tmp_tail = before_tmp_tail_prev
+            print(i, "after", tmp_head, tmp_tail)
+        self._head, self._tail = self._tail, self._head
+        print("final", self._head, self._tail, tmp_head, tmp_tail)
+        '''
+        """
+
 
 def main():
     d = DoublyLinkedList()
@@ -219,6 +263,15 @@ def main():
     print(d)
     assert d.remove_at(1) == 20
     print(d)
+
+    n = 5
+    d = DoublyLinkedList()
+    for i in range(n):
+        d.add_last(i)
+    assert str(d) == "DoublyLinkedList: [0 -> 1 -> 2 -> 3 -> 4]"
+    d.reverse()
+    assert str(d) == "DoublyLinkedList: [4 -> 3 -> 2 -> 1 -> 0]"
+    print("COMPLETED DLL")
     return
 
 

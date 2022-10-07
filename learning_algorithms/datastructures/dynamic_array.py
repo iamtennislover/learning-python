@@ -29,16 +29,16 @@ class DynamicArray():
 
     def add(self, elem):  # append - O(1)
         """Append elem to array
-		NOTE: since originally self.len == 0,
-		elems are added from 1st index onwards
+        NOTE: since originally self.len == 0,
+        elems are added from 1st index onwards
 
-		Logic:
-		1. if new elem is going to exceed array's size
-			a. create new array with double current size
-			b. copy data from old array to new array
-			c. use new array
-		2. add the elem to the array and increment len
-		"""
+        Logic:
+        1. if new elem is going to exceed array's size
+            a. create new array with double current size
+            b. copy data from old array to new array
+            c. use new array
+        2. add the elem to the array and increment len
+        """
         # current len + elem will require a new array
         if (self.len + 1 >= self._capacity):
             if self._capacity == 0:
@@ -57,14 +57,15 @@ class DynamicArray():
     def remove_at(self, index):  # O(n)
         """Remove an elem at given index
 
-		Logic:
-		1. create new array with current capacity - 1
-		2. 
-		"""
+        Logic:
+        1. create new array with current capacity - 1
+        2. copy values from current array to new array left shifting values by one index once given index == iterator index.
+        Alternatively, we could shift in place without using extra space.
+        """
         if index >= self.len or index < 0: raise IndexError()
         new_arr = [None] * (self._capacity - 1)
         j = 0  # to access new_arr
-        d = self._arr[index]
+        v = self._arr[index]
         for i in range(self._capacity):  # copy
             if i == index:
                 j = j - 1  # go back behind
@@ -74,7 +75,7 @@ class DynamicArray():
         self._arr = new_arr
         self.len = self.len - 1
         self._capacity = self._capacity - 1
-        return d
+        return v
 
     def index_of(self, elem):  # search - O(n)
         """get index of elem"""
@@ -92,6 +93,20 @@ class DynamicArray():
         r = self._arr[self._iter_index]
         self._iter_index = self._iter_index + 1
         return r
+
+
+def reverse_in_place():
+    """Logic: swap opposite ends for n/2
+    Time: O(n/2)
+    Ref: https://stackoverflow.com/questions/34346673/algorithm-to-reverse-list-items-in-place"""
+    n = 5
+    l = [i * 10 for i in range(1, n + 1)]
+    original_l = l[:]
+    print(l)
+    n = len(l)
+    for i in range(n // 2):
+        l[i], l[n - 1 - i] = l[n - 1 - i], l[i]
+    assert l == list(reversed(original_l))
 
 
 def main():
@@ -118,6 +133,7 @@ def main():
     assert d.get(0) == 10
     assert d.get(1) == 30
     print(d._arr)
+    reverse_in_place()
 
 
 main()

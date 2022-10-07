@@ -1,4 +1,4 @@
-# import sandbox
+import sandbox
 
 # from learning_algorithms.abdul_bari import binary_search
 # from learning_algorithms.abdul_bari import merge_sort
@@ -11,9 +11,9 @@
 # from learning_algorithms.datastructures import queue
 # from learning_algorithms.datastructures import binary_heap
 # from learning_algorithms.datastructures import union_find
-# from learning_algorithms.datastructures import binary_search_tree
+from learning_algorithms.datastructures import binary_search_tree
 # from learning_algorithms.datastructures import perfect_binary_tree
-from learning_algorithms.datastructures import heap
+# from learning_algorithms.datastructures import heap
 # from learning_algorithms.datastructures import hashtable
 # import learning_algorithms.recursion
 # from learning_algorithms.prepwork.divideandconquer import is_sorted_and_binary_search
@@ -22,7 +22,3 @@ from learning_algorithms.datastructures import heap
 # from learning_algorithms.prepwork.divideandconquer import quicksort
 # from learning_algorithms.prepwork.greedy import knapsack
 # from learning_algorithms.prepwork.greedy import jobsequencing
-
-
-
-

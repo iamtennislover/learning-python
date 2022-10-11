@@ -2,7 +2,7 @@
 Covers topics from
 
 https://www.notion.so/ammul/Queues-c6eafab37eb7480da05607c89c4e28f2
-https://www.notion.so/ammul/2-6-3-Heap-Heap-Sort-2f398aa1d4d34ecf923ca2deaddc7599#96b4e496656543beb18567aef7f24b4d
+https://www.notion.so/ammul/Heap-DS-54b6d678b33b43029ff4670b4b468853#9b7726928d56447bb9d6da688738d3b8
 
 around priority queue using binary heap
 """
@@ -10,6 +10,124 @@ import math
 from typing import List
 
 
+#
+# Simple functional implementation
+#
+def build_heap(l, max_heap=True):
+    n = len(l)
+    for i in range(int(n / 2) - 1, -1, -1):
+        if max_heap:
+            _max_heapify(l, n, i)
+        else:
+            _min_heapify(l, n, i)
+
+
+def _max_heapify(l, n, i):
+    '''
+    send root -> leaf by swapping root with largest child
+    '''
+    print(f"heapifying {l}/{n}/{i}")
+    largesti = i
+    li = 2 * i + 1
+    ri = 2 * i + 2
+    if li < n and l[li] > l[largesti]:
+        largesti = li
+    if ri < n and l[ri] > l[largesti]:
+        largesti = ri
+    if largesti != i:
+        print(f"swapping {largesti}({l[largesti]}) with {i}(l[i])")
+        l[i], l[largesti] = l[largesti], l[i]
+        _max_heapify(l, n, largesti)
+
+
+def _min_heapify(l, n, i):
+    '''
+    send root -> leaf by swapping root with smallest child
+    '''
+    print(f"heapifying {l}/{n}/{i}")
+    smallesti = i
+    li = 2 * i + 1
+    ri = 2 * i + 2
+    if li < n and l[li] < l[smallesti]:
+        smallesti = li
+    if ri < n and l[ri] < l[smallesti]:
+        smallesti = ri
+    if smallesti != i:
+        print(f"swapping {smallesti}({l[smallesti]}) with {i}(l[i])")
+        l[i], l[smallesti] = l[smallesti], l[i]
+        _min_heapify(l, n, smallesti)
+
+
+def is_heap(l, max_heap=True):
+    n = len(l)
+    for i in range(n):
+        li = 2 * i + 1
+        ri = 2 * i + 2
+        if max_heap:
+            if (li < n and l[i] < l[li]) or (ri < n and l[i] < l[ri]):
+                return False
+        else:
+            if (li < n and l[i] > l[li]) or (ri < n and l[i] > l[ri]):
+                return False
+    return True
+
+
+def delete(l: list, e, max_heap=True):
+    n = len(l)
+    i = l.index(e)
+    if i == -1:
+        return False
+    if i >= int(n / 2):
+        print("removing leaf")
+        return l.remove(e)
+    else:
+        print(f"swapping with leaf {l[-1]}")
+        l[-1], l[i] = l[i], l[-1]
+        v = l.pop()
+        build_heap(l, max_heap=max_heap)
+        return v
+
+
+def heap_sort(l):
+    build_heap(l, max_heap=True)
+    n = len(l)
+    for i in range(n - 1, 0, -1):
+        rooti = 0
+        l[rooti], l[i] = l[i], l[rooti]
+        _max_heapify(l, n=i, i=rooti)
+
+
+def simple_implementation_main():
+    l = [10, 20, 15, 12, 40, 25, 18]
+    build_heap(l)
+    assert l == [40, 20, 25, 12, 10, 15, 18]
+
+    l = [10, 20, 15, 12, 40, 25, 18]
+    build_heap(l, max_heap=False)
+    assert l == [10, 12, 15, 20, 40, 25, 18]
+
+    l = [10, 20, 15, 12, 40, 25, 18]
+    assert is_heap(l) is False
+    l = [40, 20, 25, 12, 10, 15, 18]
+    assert is_heap(l) is True
+    l = [10, 20, 30, 40]
+    assert is_heap(l) is False
+
+    l = [10, 20, 15, 12, 40, 25, 18]
+    build_heap(l, max_heap=True)
+    assert l == [40, 20, 25, 12, 10, 15, 18]
+    assert delete(l, 25) == 25
+    assert is_heap(l)
+
+    l = [10, 20, 15, 12, 40, 25, 18]
+    l = [30, 20, 50, 100, 1]
+    heap_sort(l)
+    assert l == sorted(l)
+
+
+#
+# Legacy - using classes and few more complex stuff
+#
 def example1_binary_tree():
     """
 	"Example1-BT" in https://www.notion.so/ammul/2-6-3-Heap-Heap-Sort-2f398aa1d4d34ecf923ca2deaddc7599#917515359872405a9cd0d9dac39b903a
@@ -111,7 +229,7 @@ class MinBinaryHeapPQ:
         # 2. move elem from leaf -> root. i.e. swim from index of elem (i.e. last elem)
         self._swim(self.size() - 1)
 
-    def _swim(self, k):
+    def _swim(self, k): # aka _heapify()
         """Move given elem's index from leaf -> root (bottom up) by following logic:
 		if k's elem (assuming currently at leaf) < parent, swap
 		repeat until k is swapped all the way to the top if needed
@@ -240,8 +358,9 @@ class MinBinaryHeapPQ:
             self._swap(k, smallestchild)
             k = smallestchild  # navigate to smallest child
 
-
 def main():
+    return simple_implementation_main()
+
     # example1_binary_tree()
     q = MinBinaryHeapPQ()
     q.add(30)
@@ -255,6 +374,138 @@ def main():
     q.remove(30)
     print(q._heap)
     assert q.is_min_heap() == True
+    print("COMPLETED")
+
+# main()
 
 
-main()
+#
+# PRACTICE
+#
+class MaxHeapify:
+    def __init__(self, l):
+        self._l = l
+    def heapify(self):
+        for i in range(int(len(self._l)/2)-1,-1,-1):
+            print(f"i:{i}")
+            self._heapify(i)
+        return self._l
+    def _heapify(self, i, n=None):
+        l = self._l
+        n = n or len(l)
+        li = 2*i + 1
+        ri = 2*i + 2
+        mi = i
+        if li < n and l[li] > l[i]:
+            mi = li
+        if ri < n and l[ri] > l[mi]:
+            mi = ri
+        if mi != i:
+            print(f"swapping l[{i}]={l[i]} -> l[{mi}]={l[mi]}")
+            l[i], l[mi] = l[mi], l[i]
+            return self._heapify(mi,n=n)
+
+    def is_heap(self):
+        l = self._l
+        n = len(l)
+        for i in range(n//2-1,-1,-1):
+            li = 2*i+1
+            ri = 2*i+2
+            if (li < n and l[li] > l[i]) or (ri < n and l[ri] > l[i]):
+                return False
+        return True
+
+    def add(self, v):
+        self._l.append(v)
+        self.heapify()
+
+    def remove(self, v):
+        l = self._l
+        n = len(l)
+        i = l.index(v)
+        if i == -1:
+            return False
+        if i > (n//2-1):
+            return l.pop(i)
+        v = l.pop(i)
+        self.heapify()
+        return v
+
+    def heap_sort(self):
+        self.heapify()
+        l = self._l
+        for n in range(len(l)-1,0,-1):
+            l[0], l[n] = l[n], l[0]
+            self._heapify(n=n,i=0)
+
+
+def main_practice():
+    """
+    start with:
+         1
+       2   3
+      4 5 6 7
+    
+    after i=2
+         1
+       2   7
+      4 5 6 3
+    
+    after i=1
+         1
+       5   7
+      4 2 6 3
+    
+    after i=0
+         7
+       5   1
+      4 2 6 3
+    after recursion:
+         7
+       5   6
+      4 2 1 3
+    """
+    l = list([1,2,3,4,5,6,7])
+    m = MaxHeapify(l)
+    assert m.heapify() == [7,5,6,4,2,1,3]
+    assert m.is_heap()
+    print("adding", "*"*5)
+    m.add(8)
+    print(l)
+    print("removing", "*" * 5)
+    m.remove(4)
+    print(l)
+    m.remove(8)
+    print(l)
+    print("heapsorting", "*" * 5)
+    m.heap_sort()
+    assert l == [1, 2, 3, 5, 6, 7]
+
+# main_practice()
+
+
+import heapq # min heap
+l = []
+for i in range(1,8):
+    heapq.heappush(l, i)
+print(l)
+print(heapq.heappop(l))
+print(l)
+heapq.heappushpop()
+heapq.heapreplace()
+
+
+'''
+# Kth largest element in an array - Time: O(k + (n-k) log k), space: O(k)
+
+class Solution:
+    def findKthLargest(self, nums, k):
+        # minheap
+        array = nums[:k]
+        heapq.heapify(array) # O(k)
+        for num in nums[k:]: # O(n-k)
+            if num > array[0]:
+                heapq.heapreplace(array, num) # O(log k)
+        return array[0]
+
+'''
